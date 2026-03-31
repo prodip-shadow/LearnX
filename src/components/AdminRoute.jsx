@@ -1,9 +1,9 @@
-'use client';
-import { useEffect, useState } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
-import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from '@/lib/firebase.init';
-import { Loader2, ShieldCheck } from 'lucide-react';
+"use client";
+import { useEffect, useState } from "react";
+import { useRouter, usePathname } from "next/navigation";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "@/lib/firebase.init";
+import { Loader2, ShieldCheck } from "lucide-react";
 
 const AdminRoute = ({ children }) => {
   const [loading, setLoading] = useState(true);
@@ -18,10 +18,10 @@ const AdminRoute = ({ children }) => {
           const res = await fetch(`/api/users?email=${user.email}`);
           const data = await res.json();
 
-          if (data?.role === 'admin') {
+          if (data?.role === "admin") {
             setIsAdmin(true);
           } else {
-            router.push('/');
+            router.push("/");
           }
         } catch (error) {
           router.push(`/login?redirect=${pathname}`);
