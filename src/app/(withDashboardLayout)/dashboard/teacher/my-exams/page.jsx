@@ -1,8 +1,8 @@
-'use client';
-import React, { useState, useEffect } from 'react';
-import { auth } from '@/lib/firebase.init';
-import { onAuthStateChanged } from 'firebase/auth';
-import Swal from 'sweetalert2';
+"use client";
+import React, { useState, useEffect } from "react";
+import { auth } from "@/lib/firebase.init";
+import { onAuthStateChanged } from "firebase/auth";
+import Swal from "sweetalert2";
 import {
   Trash2,
   Layers,
@@ -14,9 +14,9 @@ import {
   Clock,
   PlayCircle,
   PauseCircle,
-} from 'lucide-react';
-import Link from 'next/link';
-import TeacherRoute from '@/components/TeacherRoute';
+} from "lucide-react";
+import Link from "next/link";
+import TeacherRoute from "@/components/TeacherRoute";
 
 const AllExamsByTheTeacher = () => {
   const [exams, setExams] = useState([]);
@@ -43,7 +43,7 @@ const AllExamsByTheTeacher = () => {
         setExams(data.data);
       }
     } catch (error) {
-      console.error('Error fetching exams:', error);
+      console.error("Error fetching exams:", error);
     } finally {
       setLoading(false);
     }
@@ -54,8 +54,8 @@ const AllExamsByTheTeacher = () => {
     try {
       const newStatus = !currentStatus;
       const res = await fetch(`/api/exams/create`, {
-        method: 'PATCH', // আপনার ব্যাকএন্ড অনুযায়ী PATCH বা PUT হতে পারে
-        headers: { 'Content-Type': 'application/json' },
+        method: "PATCH", // আপনার ব্যাকএন্ড অনুযায়ী PATCH বা PUT হতে পারে
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id, exam: newStatus }),
       });
 
@@ -68,42 +68,42 @@ const AllExamsByTheTeacher = () => {
         );
 
         Swal.fire({
-          title: `Exam ${newStatus ? 'Activated' : 'Deactivated'}!`,
-          icon: 'success',
+          title: `Exam ${newStatus ? "Activated" : "Deactivated"}!`,
+          icon: "success",
           toast: true,
-          position: 'top-end',
+          position: "top-end",
           showConfirmButton: false,
           timer: 2000,
         });
       }
     } catch (error) {
-      Swal.fire('Error', 'Failed to update status.', 'error');
+      Swal.fire("Error", "Failed to update status.", "error");
     }
   };
 
   const handleDelete = async (id) => {
     const result = await Swal.fire({
-      title: 'Are you sure?',
+      title: "Are you sure?",
       text: "You won't be able to revert this!",
-      icon: 'warning',
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: '#ef4444',
-      cancelButtonColor: '#94a3b8',
-      confirmButtonText: 'Yes, delete it!',
+      confirmButtonColor: "#ef4444",
+      cancelButtonColor: "#94a3b8",
+      confirmButtonText: "Yes, delete it!",
     });
 
     if (result.isConfirmed) {
       try {
         const res = await fetch(`/api/exams/create?id=${id}`, {
-          method: 'DELETE',
+          method: "DELETE",
         });
         const data = await res.json();
         if (data.success) {
           setExams(exams.filter((exam) => exam._id !== id));
-          Swal.fire('Deleted!', 'Exam room removed.', 'success');
+          Swal.fire("Deleted!", "Exam room removed.", "success");
         }
       } catch (error) {
-        Swal.fire('Error', 'Failed to delete.', 'error');
+        Swal.fire("Error", "Failed to delete.", "error");
       }
     }
   };
@@ -142,12 +142,12 @@ const AllExamsByTheTeacher = () => {
                 <div className="flex justify-between items-start mb-6">
                   {/* স্ট্যাটাস ব্যাজ */}
                   <div
-                    className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest flex items-center gap-2 ${exam.exam ? 'bg-green-100 text-green-600' : 'bg-orange-100 text-orange-600'}`}
+                    className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest flex items-center gap-2 ${exam.exam ? "bg-green-100 text-green-600" : "bg-orange-100 text-orange-600"}`}
                   >
                     <span
-                      className={`h-2 w-2 rounded-full ${exam.exam ? 'bg-green-500 animate-pulse' : 'bg-orange-500'}`}
+                      className={`h-2 w-2 rounded-full ${exam.exam ? "bg-green-500 animate-pulse" : "bg-orange-500"}`}
                     ></span>
-                    {exam.exam ? 'Active (Live)' : 'Inactive (Off)'}
+                    {exam.exam ? "Active (Live)" : "Inactive (Off)"}
                   </div>
 
                   <button
@@ -170,11 +170,10 @@ const AllExamsByTheTeacher = () => {
                 {/* টগল বাটন */}
                 <button
                   onClick={() => handleToggleStatus(exam._id, exam.exam)}
-                  className={`w-full flex items-center justify-center gap-3 py-3 rounded-2xl font-black text-[11px] uppercase tracking-widest transition-all mb-4 ${
-                    exam.exam
-                      ? 'bg-orange-50 text-orange-600 hover:bg-orange-600 hover:text-white'
-                      : 'bg-green-50 text-green-600 hover:bg-green-600 hover:text-white'
-                  }`}
+                  className={`w-full flex items-center justify-center gap-3 py-3 rounded-2xl font-black text-[11px] uppercase tracking-widest transition-all mb-4 ${exam.exam
+                      ? "bg-orange-50 text-orange-600 hover:bg-orange-600 hover:text-white"
+                      : "bg-green-50 text-green-600 hover:bg-green-600 hover:text-white"
+                    }`}
                 >
                   {exam.exam ? (
                     <>
