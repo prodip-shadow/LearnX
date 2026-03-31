@@ -23,7 +23,6 @@ const TutorsPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedTutor, setSelectedTutor] = useState(null);
 
-  // ১. এপিআই থেকে টিচারদের ডাটা ফেচ করা
   useEffect(() => {
     const fetchTutors = async () => {
       try {
@@ -41,14 +40,12 @@ const TutorsPage = () => {
     fetchTutors();
   }, []);
 
-  // ২. সার্চ কুয়েরি অনুযায়ী টিচার ফিল্টার করা
   const filteredTutors = tutors.filter((tutor) =>
     tutor.name.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   return (
     <main className="min-h-screen bg-[#fcfcfd] text-slate-900 pb-20">
-      {/* --- হিরো এবং সার্চ সেকশন --- */}
       <section className="px-6 md:px-20 py-20 bg-white border-b border-slate-100 relative overflow-hidden">
         <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-96 h-96 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
 
@@ -85,7 +82,6 @@ const TutorsPage = () => {
         </div>
       </section>
 
-      {/* --- টিচার গ্রিড --- */}
       <section className="px-6 md:px-20 py-16">
         <div className="max-w-7xl mx-auto">
           {loading ? (
@@ -171,8 +167,6 @@ const TutorsPage = () => {
         </div>
       </section>
 
-      {/* --- টিচার প্রোফাইল মোডাল (পপ-আপ) --- */}
-      {/* --- টিচার প্রোফাইল মোডাল (পপ-আপ) --- */}
       {selectedTutor && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
           {/* Backdrop */}
@@ -181,9 +175,7 @@ const TutorsPage = () => {
             onClick={() => setSelectedTutor(null)}
           />
 
-          {/* Modal Card - Width increased to max-w-3xl */}
           <div className="relative w-full max-w-3xl bg-white rounded-[3.5rem] shadow-[0_30px_100px_rgba(0,0,0,0.25)] overflow-hidden animate-in zoom-in slide-in-from-bottom-10 duration-500">
-            {/* Modal Close Button */}
             <button
               onClick={() => setSelectedTutor(null)}
               className="absolute top-6 right-6 z-30 p-2.5 bg-white/90 hover:bg-red-500 text-slate-400 hover:text-white rounded-2xl transition-all duration-300 shadow-lg"
@@ -191,17 +183,14 @@ const TutorsPage = () => {
               <X size={18} strokeWidth={3} />
             </button>
 
-            {/* Modal Header - Height reduced */}
             <div className="h-32 bg-gradient-to-br from-primary to-[#148b19] relative overflow-hidden">
               <div className="absolute inset-0 opacity-10">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-white rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
               </div>
             </div>
 
-            {/* Profile Content - Grid Layout used to reduce height */}
             <div className="px-10 pb-10 -mt-16 relative z-10">
               <div className="flex flex-col md:flex-row gap-10">
-                {/* Left Side: Avatar and Basic Stats */}
                 <div className="md:w-1/3 flex flex-col items-center md:items-start">
                   <div className="relative inline-block">
                     <Image
@@ -241,7 +230,6 @@ const TutorsPage = () => {
                   </div>
                 </div>
 
-                {/* Right Side: Identity and Contact Info */}
                 <div className="md:w-2/3 pt-16">
                   <div className="flex items-center gap-2 mb-2">
                     <span className="px-3 py-1 rounded-full bg-primary/10 text-primary text-[9px] font-black uppercase tracking-widest">
