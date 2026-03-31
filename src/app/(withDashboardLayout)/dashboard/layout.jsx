@@ -1,5 +1,6 @@
 // src/app/(withDashboardLayout)/layout.jsx
-import DashboardSidebar from '@/components/shared/DashboardSidebar';
+
+import DashboardSidebar from "@/components/shared/DashboardSidebar";
 
 export default function DashboardLayout({ children }) {
   return (
