@@ -58,7 +58,6 @@ const ExamResultContent = () => {
 
   return (
     <div className="mx-auto">
-      {/* Header section with Search */}
       <div className="mb-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
           <Link
