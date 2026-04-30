@@ -1,14 +1,14 @@
-'use client';
-import { useState } from 'react';
-import { auth } from '@/lib/firebase.init';
+"use client";
+import { useState } from "react";
+import { auth } from "@/lib/firebase.init";
 import {
     createUserWithEmailAndPassword,
     updateProfile,
     signInWithEmailAndPassword,
     signInWithPopup,
-    GoogleAuthProvider
-} from 'firebase/auth';
-import Swal from 'sweetalert2';
+    GoogleAuthProvider,
+} from "firebase/auth";
+import Swal from "sweetalert2";
 
 export const useAuthActions = () => {
     const [loading, setLoading] = useState(false);
@@ -20,16 +20,16 @@ export const useAuthActions = () => {
         const userData = {
             name: fullName || user.displayName,
             email: user.email,
-            // যদি সরাসরি ইমেজ পাস করা হয় (রেজিস্ট্রেশন থেকে) তবে সেটা নেবে, 
+            // যদি সরাসরি ইমেজ পাস করা হয় (রেজিস্ট্রেশন থেকে) তবে সেটা নেবে,
             // নাহলে ফায়ারবেস প্রোফাইল থেকে নেবে
             image: image || user.photoURL || "",
-            role: 'student', // ডিফল্ট রোল সেট করে দেওয়া ভালো
+            role: "student", // ডিফল্ট রোল সেট করে দেওয়া ভালো
         };
 
         try {
-            const res = await fetch('/api/users', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+            const res = await fetch("/api/users", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(userData),
             });
             const data = await res.json();
@@ -45,28 +45,33 @@ export const useAuthActions = () => {
         setLoading(true);
         try {
             // ১. ফায়ারবেস ইউজার তৈরি
-            const result = await createUserWithEmailAndPassword(auth, email, password);
+            const result = await createUserWithEmailAndPassword(
+                auth,
+                email,
+                password,
+            );
 
             // ২. ফায়ারবেস প্রোফাইল আপডেট (নাম এবং ImgBB লিঙ্ক সহ)
             await updateProfile(result.user, {
                 displayName: fullName,
-                photoURL: photoURL
+                photoURL: photoURL,
             });
 
             // ৩. MongoDB-তে সেভ করা (ইমেজ লিঙ্কসহ পাঠানো হচ্ছে)
             await saveUserToDB(result.user, fullName, photoURL);
 
             Swal.fire({
-                title: 'Success!',
+                title: "Success!",
                 text: `Welcome to LearnX, ${fullName}!`,
-                icon: 'success',
-                confirmButtonColor: 'var(--color-primary)',
+                icon: "success",
+                confirmButtonColor: "var(--color-primary)",
             });
             return result.user;
         } catch (error) {
             let msg = error.message;
-            if (error.code === 'auth/email-already-in-use') msg = "Email already registered!";
-            Swal.fire({ title: 'Error!', text: msg, icon: 'error' });
+            if (error.code === "auth/email-already-in-use")
+                msg = "Email already registered!";
+            Swal.fire({ title: "Error!", text: msg, icon: "error" });
             return null;
         } finally {
             setLoading(false);
@@ -79,10 +84,15 @@ export const useAuthActions = () => {
         try {
             const result = await signInWithEmailAndPassword(auth, email, password);
             await saveUserToDB(result.user);
-            Swal.fire({ title: 'Logged In!', icon: 'success', timer: 1500, showConfirmButton: false });
+            Swal.fire({
+                title: "Logged In!",
+                icon: "success",
+                timer: 1500,
+                showConfirmButton: false,
+            });
             return result.user;
         } catch (error) {
-            Swal.fire({ title: 'Login Failed', text: error.message, icon: 'error' });
+            Swal.fire({ title: "Login Failed", text: error.message, icon: "error" });
             return null;
         } finally {
             setLoading(false);
@@ -96,15 +106,15 @@ export const useAuthActions = () => {
             const result = await signInWithPopup(auth, googleProvider);
             await saveUserToDB(result.user);
             Swal.fire({
-                title: 'Success!',
+                title: "Success!",
                 text: `Logged in as ${result.user.displayName}`,
-                icon: 'success',
+                icon: "success",
                 timer: 2000,
-                showConfirmButton: false
+                showConfirmButton: false,
             });
             return result.user;
         } catch (error) {
-            Swal.fire({ title: 'Error!', text: error.message, icon: 'error' });
+            Swal.fire({ title: "Error!", text: error.message, icon: "error" });
             return null;
         } finally {
             setLoading(false);
