@@ -25,6 +25,7 @@ import {
   UserCog,
   Database,
   Briefcase,
+  Library,
 } from 'lucide-react';
 
 const DashboardSidebar = () => {
@@ -115,6 +116,16 @@ const DashboardSidebar = () => {
         href: '/dashboard/teacher/students',
         icon: <Users size={20} />,
       },
+      {
+        name: 'Add Resource',
+        href: '/dashboard/teacher/addResource',
+        icon: <Library size={20} />,
+      },
+      {
+        name: 'My Resources',
+        href: '/dashboard/teacher/my-resources',
+        icon: <BookOpen size={20} />,
+      },
     ],
     student: [
       {
@@ -131,6 +142,11 @@ const DashboardSidebar = () => {
         name: 'Progress',
         href: '/dashboard/student/progress',
         icon: <TrendingUp size={20} />,
+      },
+      {
+        name: 'Resources',
+        href: '/dashboard/student/resources',
+        icon: <Library size={20} />,
       },
     ],
   };
