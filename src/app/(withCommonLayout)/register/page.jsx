@@ -34,7 +34,6 @@ const Registration = () => {
     agreeToTerms: false,
   });
 
- 
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -47,7 +46,7 @@ const Registration = () => {
     setImagePreview(URL.createObjectURL(file));
     setUploading(true);
 
-    const IMGBB_API_KEY = process.env.NEXT_PUBLIC_IMGBB_API_KEY;
+    const IMGBB_API_KEY = process.env.NEXT_PUBLIC_IMAGEBB_API_KEY;
 
     if (!IMGBB_API_KEY) {
       console.error('ImgBB API key is missing in .env.local');
@@ -300,9 +299,7 @@ const Registration = () => {
                 className="text-sm text-slate-500 font-medium cursor-pointer"
               >
                 I agree to the{' '}
-                <span className="text-primary font-bold">
-                  Terms of Service
-                </span>
+                <span className="text-primary font-bold">Terms of Service</span>
               </label>
             </div>
 
@@ -336,6 +333,6 @@ const Registration = () => {
       </div>
     </div>
   );
-};;
+};
 
 export default Registration;

@@ -33,7 +33,7 @@ const UpdateProfile = () => {
     role: '',
   });
 
-  const IMGBB_API_KEY = process.env.NEXT_PUBLIC_IMGBB_API_KEY;
+  const IMGBB_API_KEY = process.env.NEXT_PUBLIC_IMAGEBB_API_KEY;
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
