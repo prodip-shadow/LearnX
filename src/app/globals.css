@@ -59,3 +59,16 @@ body {
   overflow-x: auto;
   overflow-y: hidden;
 }
+
+.chatbot-markdown a,
+.chatbot-link {
+  color: #2563eb;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.chatbot-markdown a:hover,
+.chatbot-link:hover {
+  color: #1d4ed8;
+}

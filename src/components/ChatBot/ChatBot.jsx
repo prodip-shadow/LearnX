@@ -20,6 +20,16 @@ const ChatMessageContent = ({ text }) => {
       <ReactMarkdown
         remarkPlugins={[remarkGfm, remarkMath]}
         rehypePlugins={[rehypeKatex]}
+        components={{
+          a: ({ node, ...props }) => (
+            <a
+              {...props}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="chatbot-link"
+            />
+          ),
+        }}
       >
         {normalizedText}
       </ReactMarkdown>
