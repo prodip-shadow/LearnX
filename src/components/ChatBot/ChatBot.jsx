@@ -80,11 +80,11 @@ export default function ChatBot() {
         }),
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to get response');
-      }
-
       const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data?.message || 'Failed to get response');
+      }
 
       const aiMessage = {
         id: Date.now() + 1,
@@ -98,7 +98,8 @@ export default function ChatBot() {
       console.error('Error:', error);
       const errorMessage = {
         id: Date.now() + 1,
-        text: 'Sorry, something went wrong. Please try again.',
+        text:
+          error?.message || 'Sorry, something went wrong. Please try again.',
         sender: 'ai',
         timestamp: new Date(),
       };
