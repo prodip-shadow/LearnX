@@ -1,6 +1,31 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
+
+const normalizeMathDelimiters = (text = '') => {
+  return text
+    .replace(/\\\[(.*?)\\\]/gs, (_, expr) => `$$${expr.trim()}$$`)
+    .replace(/\\\((.*?)\\\)/gs, (_, expr) => `$${expr.trim()}$`);
+};
+
+const ChatMessageContent = ({ text }) => {
+  const normalizedText = normalizeMathDelimiters(text);
+
+  return (
+    <div className="chatbot-markdown">
+      <ReactMarkdown
+        remarkPlugins={[remarkGfm, remarkMath]}
+        rehypePlugins={[rehypeKatex]}
+      >
+        {normalizedText}
+      </ReactMarkdown>
+    </div>
+  );
+};
 
 export default function ChatBot() {
   const [isOpen, setIsOpen] = useState(false);
@@ -116,11 +141,15 @@ export default function ChatBot() {
                   key={msg.id}
                   className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
-                  <p
-                    className={`max-w-[80%] wrap-break-word rounded-2xl px-4 py-2.5 text-sm leading-6 shadow-sm ${msg.sender === 'user' ? 'rounded-br-md bg-linear-to-br from-[#22c55e] to-[#16a34a] text-white shadow-[0_10px_20px_rgba(34,197,94,0.16)]' : 'rounded-bl-md border border-slate-200 bg-white text-slate-900 shadow-[0_8px_24px_rgba(15,23,42,0.08)]'}`}
-                  >
-                    {msg.text}
-                  </p>
+                  {msg.sender === 'user' ? (
+                    <p className="max-w-[80%] wrap-break-word rounded-2xl rounded-br-md bg-linear-to-br from-[#22c55e] to-[#16a34a] px-4 py-2.5 text-sm leading-6 text-white shadow-[0_10px_20px_rgba(34,197,94,0.16)]">
+                      {msg.text}
+                    </p>
+                  ) : (
+                    <div className="max-w-[85%] wrap-break-word rounded-2xl rounded-bl-md border border-slate-200 bg-white px-4 py-2.5 text-sm leading-6 text-slate-900 shadow-[0_8px_24px_rgba(15,23,42,0.08)]">
+                      <ChatMessageContent text={msg.text} />
+                    </div>
+                  )}
                 </div>
               ))}
 

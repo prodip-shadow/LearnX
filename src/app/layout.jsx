@@ -1,5 +1,6 @@
 import { Poppins } from 'next/font/google';
 import './globals.css';
+import 'katex/dist/katex.min.css';
 import ChatBot from '@/components/ChatBot/ChatBot';
 
 const poppins = Poppins({

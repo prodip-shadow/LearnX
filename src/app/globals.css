@@ -36,3 +36,26 @@ body {
 .bg-page {
   background-color: var(--page-bg);
 }
+
+.chatbot-markdown p {
+  margin: 0.35rem 0;
+}
+
+.chatbot-markdown ul,
+.chatbot-markdown ol {
+  margin: 0.4rem 0;
+  padding-left: 1.1rem;
+}
+
+.chatbot-markdown h1,
+.chatbot-markdown h2,
+.chatbot-markdown h3 {
+  margin: 0.55rem 0 0.35rem;
+  font-weight: 700;
+}
+
+.chatbot-markdown .katex-display {
+  margin: 0.65rem 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
